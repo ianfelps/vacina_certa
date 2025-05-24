@@ -35,6 +35,53 @@
         </div>
     </nav>
 
+    <!-- Busca -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col">
+                <h1>Realizar Busca</h1>
+                <form action="">
+                    <label for="vacina" class="form-label mt-5">Tipo de Vacina:</label>
+                    <select name="vacina" id="vacina"  class="form-select" required>
+                        <option value=""></option>
+                        <option value="A">Vacina Tipo A</option>
+                        <option value="B">Vacina Tipo B</option>
+                        <option value="C">Vacina Tipo C</option>
+                        <option value="D">Vacina Tipo D</option>
+                        <option value="E">Vacina Tipo E</option>
+                        <option value="F">Vacina Tipo F</option>
+                    </select>
+                    <label for="localizacao" class="form-label mt-3">Localização:</label>
+                    <select name="localizacao" id="localizacao" class="form-select" required>
+                        <option value=""></option>
+                        <option value="local01">Local 01</option>
+                        <option value="local02">Local 02</option>
+                        <option value="local03">Local 03</option>
+                        <option value="local04">Local 04</option>
+                        <option value="local05">Local 05</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-lg mt-4">Realizar Busca</button>
+                </form>
+                <div class="mt-5">
+                    <h2>Resultado</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi fugit unde sapiente fugiat eaque cumque, assumenda cum esse vel officiis, alias quidem quam perferendis quos, nam distinctio placeat exercitationem suscipit.</p>
+                </div>
+            </div>
+            <div class="col">
+                <p>mapa!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer bg-body-tertiary fixed-bottom">
+        <div class="text-center fade-in p-3">
+            Projeto desenvolvido na disciplina de Programação Web na UCB.
+            <br>
+            <a href="https://github.com/ianfelps/vacina_certa" class="text-decoration-none">Repositório no GitHub</a>
+        </div>
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
 </body>
 </html>
