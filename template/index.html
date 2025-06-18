@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vacina Certa - Início</title>
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 </head>
@@ -12,7 +12,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand me-2" href="index.html">
+            <a class="navbar-brand me-2" href="/">
                 💉 Vacina Certa
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -20,16 +20,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto"></ul>
-                <ul class="navbar-nav me-2 h5">
+                <ul class="navbar-nav ms-auto me-2 h5">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Início</a>
+                        <a class="nav-link" href="/">Início</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="busca.html">Busca</a>
+                        <a class="nav-link" href="busca">Busca</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sobre.html">Sobre</a>
+                        <a class="nav-link" href="sobre">Sobre</a>
                     </li>
                 </ul>
             </div>
@@ -37,56 +36,36 @@
     </nav>
 
     <!-- Carossel -->
+        <!-- Carrossel dinâmico de campanhas -->
     <div id="myCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
         <div class="carousel-indicators fade-in">
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-                aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            {% for campanha in campanhas %}
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ loop.index0 }}"
+                    class="{% if loop.first %}active{% endif %}" aria-current="{% if loop.first %}true{% endif %}"
+                    aria-label="Slide {{ loop.index }}"></button>
+            {% endfor %}
         </div>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
+            {% for campanha in campanhas %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <svg class="bd-placeholder-img" width="100%" height="400" aria-hidden="true"
                     preserveAspectRatio="xMidYMid slice" focusable="false">
                     <rect width="100%" height="100%" fill="rgb(37, 47, 62)" />
                 </svg>
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h2 class="fade-in">Campanha Nacional de Vacinação contra a Gripe</h2>
-                        <hr>
-                        <p class="fade-in">Data: 01 Abril, 2025 - 30 Junho, 2025</p>
-                        <p class="fade-in">&emsp;&emsp;  Com o objetivo de reduzir os casos graves e óbitos decorrentes da Influenza, a campanha nacional de vacinação já está em andamento. Esta é uma oportunidade crucial para se proteger antes da chegada do inverno, período em que a circulação do vírus aumenta. A vacinação é a forma mais eficaz de prevenção e é fortemente recomendada, com prioridade para idosos, gestantes e crianças menores de 5 anos, que são mais vulneráveis às complicações da doença. Não deixe para depois, procure a unidade de saúde mais próxima.</p>
-                    </div>
+                <div class="carousel-caption">
+                    <h2 class="fade-in">{{ campanha[1] }}</h2>
+                    <hr>
+                    <p class="fade-in">Data: {{ campanha[4] }} a {{ campanha[5] }}</p>
+                    <p class="fade-in">&emsp;&emsp; {{ campanha[2] }}</p>
+                    {% if campanha[6] %}
+                        <p class="fade-in"><strong>Recomendações:</strong> {{ campanha[6] }}</p>
+                    {% endif %}
+                    {% if campanha[7] %}
+                        <p class="fade-in"><strong>Abrangência:</strong> {{ campanha[7] }}</p>
+                    {% endif %}
                 </div>
             </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <rect width="100%" height="100%" fill="rgb(37, 47, 62)" />
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h2 class="fade-in">Campanha de Vacinação contra o Sarampo</h2>
-                        <hr>
-                        <p class="fade-in">Data: 10 Maio, 2025 - 15 Julho, 2025</p>
-                        <p class="fade-in">&emsp;&emsp; Participe do esforço coletivo para erradicar o sarampo em todo o território nacional, uma doença altamente contagiosa que pode ser evitada com a vacina. Nossa meta é alcançar uma alta cobertura vacinal para garantir a imunidade de rebanho e proteger quem não pode ser vacinado. A vacinação ocorrerá de forma facilitada em escolas e postos de saúde em todo o país, tornando o acesso mais simples para todas as famílias. Levar seus filhos para vacinar é um ato de responsabilidade social.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <rect width="100%" height="100%" fill="rgb(37, 47, 62)" />
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h2 class="fade-in"> Campanha Municipal de Vacinação contra Hepatite B</h2>
-                        <hr>
-                        <p class="fade-in">Data: 01 Março, 2025 - 01 Maio, 2025</p>
-                        <p class="fade-in">&emsp;&emsp; Para ampliar a cobertura vacinal e combater a Hepatite B, uma infecção silenciosa que pode causar sérios danos ao fígado, nossa campanha municipal está ativa. O foco principal é reforçar a vacinação em jovens e adultos que não completaram o esquema vacinal na infância, garantindo proteção contra a doença ao longo da vida. A vacina é segura, eficaz e a principal ferramenta de prevenção. Verifique sua carteirinha de vacinação e, se necessário, compareça a um posto para se proteger.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon fade-in" aria-hidden="true"></span>
@@ -98,73 +77,31 @@
         </button>
     </div>
 
-    <!-- Vacinas -->
-    <div class="container my-5">
-        <h2 class="mb-4">Vacinas</h2>
-        <div class="row">
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Gripe (Influenza)</h5>
-                        <p class="card-text">Proteção anual contra os vírus da gripe. Essencial para evitar complicações respiratórias, especialmente em crianças, idosos e grupos de risco.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">COVID-19 (Reforço Bivalente)</h5>
-                        <p class="card-text">Garante proteção atualizada contra as variantes do coronavírus. Manter o esquema vacinal em dia é fundamental para a saúde de todos.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Febre Amarela</h5>
-                        <p class="card-text">Prevenção contra a febre amarela, uma doença grave. Indicada para moradores e viajantes de áreas com recomendação de vacinação.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Tríplice Viral (SRC)</h5>
-                        <p class="card-text">Protege contra Sarampo, Caxumba e Rubéola. Uma vacina indispensável no calendário de vacinação infantil para evitar surtos.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Hepatite B</h5>
-                        <p class="card-text">Previne a infecção pelo vírus da hepatite B, que pode levar a doenças crônicas do fígado. Recomendada para todas as faixas etárias.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">HPV Quadrivalente</h5>
-                        <p class="card-text">Principal forma de prevenção contra o Papilomavírus Humano (HPV), responsável por causar diversos tipos de câncer.</p>
+    <!-- Vacinas Disponíveis -->
+    <div class="container my-4">
+        <h2 class="mb-4">Vacinas Disponíveis</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for vacina in vacinas %}
+            <div class="col d-flex align-items-stretch">
+                <div class="card mb-4 w-100 h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ vacina[1] }}</h5>
+                        <p class="card-text flex-grow-1">
+                            {{ vacina[4] }}<br>
+                            <strong>Tipo de dose:</strong> {{ vacina[6] if vacina[6] else 'N/A' }}<br>
+                            {% if vacina[-1] %}
+                                <strong>Público alvo:</strong> {{ vacina[-1] }}<br>
+                            {% endif %}
+                            {% if vacina[11] %}
+                                <strong>Recomendações:</strong> {{ vacina[11] }}<br>
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">dTpa (Tríplice Bacteriana)</h5>
-                        <p class="card-text">Oferece proteção para adultos e gestantes contra Difteria, Tétano e Coqueluche, protegendo também o recém-nascido.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Pneumocócica</h5>
-                        <p class="card-text"> Atua na prevenção de doenças graves como pneumonia, meningite e otite, causadas pela bactéria pneumococo.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Meningocócica ACWY</h5>
-                        <p class="card-text"> Proteção ampla contra a meningite e infecções generalizadas causadas pela bactéria meningococo dos sorogrupos A, C, W e Y.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
-
     <!-- Rodapé -->
     <footer class="footer bg-body-tertiary">
         <div class="text-center fade-in p-3">

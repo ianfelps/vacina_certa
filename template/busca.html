@@ -11,7 +11,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <a class="navbar-brand me-2" href="index.html">
+            <a class="navbar-brand me-2" href="/">
                 💉 Vacina Certa
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -22,13 +22,13 @@
                 <ul class="navbar-nav me-auto"></ul>
                 <ul class="navbar-nav me-2 h5">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html">Início</a>
+                        <a class="nav-link" href="/">Início</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="busca.html">Busca</a>
+                        <a class="nav-link" href="busca">Busca</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="sobre.html">Sobre</a>
+                        <a class="nav-link" href="sobre">Sobre</a>
                     </li>
                 </ul>
             </div>
@@ -40,35 +40,54 @@
         <div class="row">
             <div class="col">
                 <h1>Realizar Busca</h1>
-                <form action="">
+                <form action="{{ url_for('busca') }}" method="get">
                     <label for="vacina" class="form-label mt-5">Tipo de Vacina:</label>
-                    <select name="vacina" id="vacina"  class="form-select" required>
-                        <option value=""></option>
-                        <option value="A">Tríplice Viral (SRC)</option>
-                        <option value="B">Hepatite B</option>
-                        <option value="C">HPV Quadrivalente</option>
-                        <option value="D">dTpa (Tríplice Bacteriana)</option>
-                        <option value="E">Pneumocócica</option>
-                        <option value="F">Meningocócica ACWY</option>
+                    <select name="vacina" id="vacina" class="form-select" required>
+                        <option value="">Selecione...</option>
+                        {% for vacina in vacinas %}
+                            <option value="{{ vacina[0] }}">{{ vacina[1] }}</option>
+                        {% endfor %}
                     </select>
+
                     <label for="localizacao" class="form-label mt-3">Localização:</label>
                     <select name="localizacao" id="localizacao" class="form-select" required>
-                        <option value=""></option>
-                        <option value="local01">Local 01</option>
-                        <option value="local02">Local 02</option>
-                        <option value="local03">Local 03</option>
-                        <option value="local04">Local 04</option>
-                        <option value="local05">Local 05</option>
+                        <option value="">Selecione...</option>
+                        {% for posto in postos %}
+                            <option value="{{ posto[0] }}" data-lat="{{ posto[2] }}" data-lng="{{ posto[3] }}">
+                                {{ posto[1] }}
+                            </option>
+                        {% endfor %}
                     </select>
                     <button type="submit" class="btn btn-primary btn-lg mt-4">Realizar Busca</button>
                 </form>
                 <div class="mt-5">
                     <h2>Resultado</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi fugit unde sapiente fugiat eaque cumque, assumenda cum esse vel officiis, alias quidem quam perferendis quos, nam distinctio placeat exercitationem suscipit.</p>
+                    {% if resultado %}
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Posto:</strong> {{ resultado[0] }}</li>
+                            <li class="list-group-item"><strong>Endereço:</strong> {{ resultado[1] }}</li>
+                            <li class="list-group-item"><strong>Quantidade disponível:</strong> {{ resultado[2] }}</li>
+                            <li class="list-group-item"><strong>Status do estoque:</strong> 
+                                {% if resultado[3] == 'C' %} Completo
+                                {% elif resultado[3] == 'M' %} Médio
+                                {% elif resultado[3] == 'V' %} Vazio
+                                {% else %} {{ resultado[3] }}
+                                {% endif %}
+                            </li>
+                        </ul>
+                    {% elif request.args %}
+                        <div class="alert alert-warning mt-3">Nenhum estoque encontrado para essa combinação.</div>
+                    {% else %}
+                        <p>Selecione uma vacina e uma localização para ver o resultado.</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="col">
-                <p>mapa!</p>
+                {% if mapa_html %}
+                    <div style="width: 100%; min-height: 400px;">
+                        {{ mapa_html|safe }}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
