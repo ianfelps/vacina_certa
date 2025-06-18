@@ -20,13 +20,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto"></ul>
-                <ul class="navbar-nav me-2 h5">
+                <ul class="navbar-nav ms-auto me-2 h5">
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">Início</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="busca.html">Busca</a>
+                        <a class="nav-link" href="{{ url_for('busca') }}">Busca</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="faq.html">Quem Somos</a>
@@ -37,56 +36,36 @@
     </nav>
 
     <!-- Carossel -->
+        <!-- Carrossel dinâmico de campanhas -->
     <div id="myCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
         <div class="carousel-indicators fade-in">
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-                aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            {% for campanha in campanhas %}
+                <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="{{ loop.index0 }}"
+                    class="{% if loop.first %}active{% endif %}" aria-current="{% if loop.first %}true{% endif %}"
+                    aria-label="Slide {{ loop.index }}"></button>
+            {% endfor %}
         </div>
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
+            {% for campanha in campanhas %}
+            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <svg class="bd-placeholder-img" width="100%" height="400" aria-hidden="true"
                     preserveAspectRatio="xMidYMid slice" focusable="false">
                     <rect width="100%" height="100%" fill="rgb(37, 47, 62)" />
                 </svg>
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h2 class="fade-in">Campanha 01</h2>
-                        <hr>
-                        <p class="fade-in">Data: Oct 4, 2023</p>
-                        <p class="fade-in">&emsp;&emsp; Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempore obcaecati soluta architecto eius doloribus assumenda atque officia, nisi ut! Hic iusto maiores accusamus eos quidem labore iure quae incidunt magnam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi accusantium quisquam tempore magnam dolorum, sit voluptatibus sequi magni eveniet hic itaque? Maiores dolore blanditiis similique enim eos impedit eaque eum.</p>
-                    </div>
+                <div class="carousel-caption">
+                    <h2 class="fade-in">{{ campanha[1] }}</h2>
+                    <hr>
+                    <p class="fade-in">Data: {{ campanha[4] }} a {{ campanha[5] }}</p>
+                    <p class="fade-in">&emsp;&emsp; {{ campanha[2] }}</p>
+                    {% if campanha[6] %}
+                        <p class="fade-in"><strong>Recomendações:</strong> {{ campanha[6] }}</p>
+                    {% endif %}
+                    {% if campanha[7] %}
+                        <p class="fade-in"><strong>Abrangência:</strong> {{ campanha[7] }}</p>
+                    {% endif %}
                 </div>
             </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <rect width="100%" height="100%" fill="rgb(37, 47, 62)" />
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h2 class="fade-in">Campanha 02</h2>
-                        <hr>
-                        <p class="fade-in">Data: Oct 10, 2023</p>
-                        <p class="fade-in">&emsp;&emsp; Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat fugiat modi quos tempora debitis. Excepturi aspernatur, dicta magni consectetur eligendi, est quo dolorum dolores aperiam eaque minus suscipit enim sint. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo similique perferendis nesciunt! Maxime accusamus ad porro magnam? Qui itaque ea ullam officia, illo ad doloremque recusandae incidunt, nesciunt, reiciendis vitae? Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur vitae ducimus obcaecati doloremque odit doloribus quis saepe ut, sed minima quaerat nemo eligendi reprehenderit, totam illum dicta sequi laboriosam ipsum.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <svg class="bd-placeholder-img" width="100%" height="100%" aria-hidden="true"
-                    preserveAspectRatio="xMidYMid slice" focusable="false">
-                    <rect width="100%" height="100%" fill="rgb(37, 47, 62)" />
-                </svg>
-                <div class="container">
-                    <div class="carousel-caption text-start">
-                        <h2 class="fade-in">Campanha 03</h2>
-                        <hr>
-                        <p class="fade-in">Data: Oct 12, 2023</p>
-                        <p class="fade-in">&emsp;&emsp; Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas odio, sapiente iusto quos earum eaque quia distinctio harum blanditiis perspiciatis quidem. Eius voluptatibus amet quae quisquam quos dignissimos enim ad? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur sint accusamus ipsum aperiam porro atque placeat sequi perspiciatis itaque nemo ullam consequatur possimus, reiciendis perferendis error. A consequatur quasi totam. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit fugit enim reprehenderit fuga incidunt at sed ratione esse explicabo facilis possimus neque ipsum, distinctio alias a aliquid tempore aspernatur? Dolore. Lorem ipsum dolor sit amet consectetur adipisicing elit. At porro quasi repudiandae aliquid dolorem necessitatibus fuga doloremque iusto delectus perspiciatis sapiente optio quidem, corporis quis eius enim magni molestiae rerum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex id a dolor doloremque eligendi nobis dolores molestiae, distinctio nesciunt fugit ipsa dolore? Culpa voluptate incidunt fugiat eaque maxime at iure. Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon fade-in" aria-hidden="true"></span>
@@ -101,80 +80,28 @@
     <!-- Vacinas Disponíveis -->
     <div class="container my-4">
         <h2 class="mb-4">Vacinas Disponíveis</h2>
-        <div class="row">
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 01</h5>
-                        <!-- ...existing code... -->
-                            <p>
-                                {% if postos %}
-                                    <strong>Postos cadastrados:</strong><br>
-                                    {% for posto in postos %}
-                                        {{ posto[1] }} - {{ posto[2] }}<br>
-                                    {% endfor %}
-                                {% else %}
-                                    Nenhum posto cadastrado.
-                                {% endif %}
-                            </p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 02</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 03</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for vacina in vacinas %}
+            <div class="col d-flex align-items-stretch">
+                <div class="card mb-4 w-100 h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ vacina[1] }}</h5>
+                        <p class="card-text flex-grow-1">
+                            {{ vacina[4] }}<br>
+                            <strong>Tipo de dose:</strong> {{ vacina[6] if vacina[6] else 'N/A' }}<br>
+                            {% if vacina[-1] %}
+                                <strong>Público alvo:</strong> {{ vacina[-1] }}<br>
+                            {% endif %}
+                            {% if vacina[11] %}
+                                <strong>Recomendações:</strong> {{ vacina[11] }}<br>
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 04</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 05</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 06</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 07</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 08</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Vacina 09</h5>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
-
     <!-- Rodapé -->
     <footer class="footer bg-body-tertiary">
         <div class="text-center fade-in p-3">
