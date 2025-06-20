@@ -4,7 +4,7 @@ from datetime import datetime
 import folium
 import os
 
-app = Flask(__name__, template_folder='template')
+app = Flask(__name__, template_folder='templates')
 
 def formatar_data(data_str):
     # Espera data no formato 'YYYY-MM-DD'
@@ -76,12 +76,14 @@ def busca():
     conn.close()
     return render_template('busca.html', vacinas=vacinas, postos=postos, resultado=resultado, mapa_html=mapa_html)
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/sobre')
 def sobre():
-    """
-    Renders the sobre.html page.
-    """
     return render_template('sobre.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
+
